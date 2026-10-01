@@ -7,7 +7,7 @@
 <br/>
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eriki-jashari-204752354/)
-![Views](https://komarev.com/ghpvc/?username=YOUR_USERNAME&style=for-the-badge&color=8B5CF6)
+![Views](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=8B5CF6)
 
 </div>
 
@@ -47,7 +47,7 @@ class Erik:
 
 <div align="center">
 
-![Stats](https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&theme=radical&hide_border=true)
-![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME&layout=compact&theme=radical&hide_border=true)
+![Stats](https://github-readme-stats.vercel.app/api?username=Erik-Jashari&show_icons=true&theme=radical&hide_border=true)
+![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&theme=radical&hide_border=true)
 
 </div>
