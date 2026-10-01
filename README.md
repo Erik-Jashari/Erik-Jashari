@@ -6,8 +6,7 @@
 
 <br/>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eriki-jashari-204752354/)
-![Views](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=8B5CF6)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eriki-jashari-204752354/) [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:erikjashari3@gmail.com)![Views](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=8B5CF6)
 
 </div>
 
@@ -47,12 +46,11 @@ class Erik:
 
 ## 📊 GitHub stats
 
-<div align="center">
+<p align="center">
+  <img height="170" src="https://github-readme-stats.vercel.app/api?username=Erik-Jashari&show_icons=true&theme=radical&hide_border=true&card_width=420" />
+  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&theme=radical&hide_border=true&card_width=420" />
+</p>
 
-![Stats](https://github-readme-stats.vercel.app/api?username=Erik-Jashari&show_icons=true&theme=radical&hide_border=true)
-![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&theme=radical&hide_border=true)
-
-</div>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake-dark.svg" />
   <img alt="snake animation" src="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake.svg" />
