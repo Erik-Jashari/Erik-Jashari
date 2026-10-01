@@ -19,8 +19,8 @@
 class Erik:
     def __init__(self):
         self.role = "CSE Student @ UBT"
-        self.location = "Kosovo"
-        self.focus = ["Full-stack", "Software Systems Engineering"]
+        self.location = "Kosovo-Ferizaj"
+        self.focus = ["Full-stack", "Software Engineering"]
         self.languages = ["Shqip", "English"]
 ```
 
