@@ -1,64 +1,206 @@
-// Generates the space-themed SVGs used in README.md.
+// Generates the retro-arcade SVGs used in README.md.
 // Edit the data below, then run: node assets/build.js
+// All text is drawn with the pixel font defined further down (uppercase only).
 
 const fs = require("fs");
 const path = require("path");
 
-const profile = {
+const player = {
   name: "ERIK JASHARI",
-  subtitle: "Full-Stack Developer · CSE Student at UBT · Ferizaj, Kosovo",
-  coords: "42.37°N · 21.15°E — FERIZAJ, KOSOVO",
-  role: "Full-stack developer, currently in orbit",
-  fields: [
-    ["CALLSIGN", "Full-Stack Developer"],
-    ["BASE", "Ferizaj, Kosovo"],
-    ["ACADEMY", "UBT · Computer Science & Engineering"],
-    ["COMMS", "Albanian · English"],
+  class: "FULL-STACK DEVELOPER",
+  footer: "© 2026 ERIK JASHARI · FERIZAJ, KOSOVO",
+  stats: [
+    ["NAME:", "ERIK JASHARI"],
+    ["CLASS:", "FULL-STACK DEV"],
+    ["GUILD:", "UBT · CSE"],
+    ["HOME WORLD:", "FERIZAJ, KOSOVO"],
+    ["LANGUAGES:", "ALBANIAN, ENGLISH"],
+    ["MAIN QUEST:", "SPORTS TOURNAMENT SYSTEM"],
   ],
-  status: "Open to internships",
-  // level = filled cells out of 10
-  systems: [
-    { name: "Frontend", stack: "React · JavaScript · HTML · CSS", level: 8 },
-    { name: "Backend", stack: "Node.js · Java · PHP", level: 7 },
-    { name: "Databases", stack: "PostgreSQL · MySQL", level: 6 },
-    { name: "Tools", stack: "Git · VS Code", level: 8 },
+  status: "LOOKING FOR A PARTY",
+  // [label, filled cells out of 16, value text, color]
+  bars: [
+    ["HP", 16, "MAX", "#00e436"],
+    ["MP", 11, "70% COFFEE", "#29adff"],
+    ["XP", 10, "LVL UP SOON", "#ffec27"],
   ],
 };
 
-// status: "IN FLIGHT" (in progress) or "LANDED" (done)
-// progress: 0..1, how far along the trajectory line the rocket is
-const missions = [
+// sprite: one of the keys in SPRITES below
+const inventory = [
+  { tech: "REACT", item: "COMPONENT SWORD", sprite: "sword" },
+  { tech: "JAVASCRIPT", item: "SCRIPT SCROLL", sprite: "scroll" },
+  { tech: "HTML/CSS", item: "STYLE HAMMER", sprite: "hammer" },
+  { tech: "NODE.JS", item: "SERVER SHIELD", sprite: "shield" },
+  { tech: "JAVA", item: "COFFEE POTION", sprite: "mug" },
+  { tech: "PHP", item: "ELEPHANT STAFF", sprite: "staff" },
+  { tech: "SQL", item: "DATA CHEST", sprite: "chest" },
+  { tech: "GIT", item: "SAVE CRYSTAL", sprite: "crystal" },
+  { tech: "VS CODE", item: "SPELLBOOK", sprite: "book" },
+];
+
+// type: "MAIN QUEST" or "SIDE QUEST"; progress: 0..1 (1 = QUEST COMPLETE)
+const quests = [
   {
-    name: "Sports Tournament Management System",
-    description: "Manage tournaments, teams, fixtures and results.",
-    status: "IN FLIGHT",
+    type: "MAIN QUEST",
+    name: "SPORTS TOURNAMENT MANAGEMENT SYSTEM",
+    description: "MANAGE TOURNAMENTS, TEAMS, FIXTURES AND RESULTS.",
     progress: 0.6,
   },
 ];
 
-const C = {
-  bg0: "#05061a",
-  bg1: "#0b0f2e",
-  bg2: "#1a1145",
-  panel: "#0f1238",
-  line: "#312e81",
-  cyan: "#7dd3fc",
-  violet: "#a78bfa",
-  amber: "#fbbf24",
-  green: "#4ade80",
-  text: "#f1f5f9",
-  soft: "#cbd5e1",
-  muted: "#94a3b8",
-  dim: "#64748b",
+// trophy: gold | silver | bronze | purple
+const achievements = [
+  { name: "FIRST COMMIT", description: "PUSHED MY FIRST CODE", trophy: "gold" },
+  { name: "HELLO WORLD", description: "PRINTED IT. IT WORKED.", trophy: "silver" },
+  { name: "SURVIVED FINALS", description: "MADE IT THROUGH EXAM WEEK", trophy: "bronze" },
+  { name: "NIGHT OWL", description: "COMMITTED AFTER 2 AM", trophy: "purple" },
+];
+
+// PICO-8 palette + arcade maze blue
+const P = {
+  black: "#000000",
+  bg: "#0a0a14",
+  slot: "#111133",
+  navy: "#1d2b53",
+  plum: "#7e2553",
+  brown: "#ab5236",
+  dgrey: "#5f574f",
+  lgrey: "#c2c3c7",
+  white: "#fff1e8",
+  red: "#ff004d",
+  orange: "#ffa300",
+  yellow: "#ffec27",
+  green: "#00e436",
+  blue: "#29adff",
+  indigo: "#83769c",
+  pink: "#ff77a8",
+  peach: "#ffccaa",
+  maze: "#2121de",
+  empty: "#222244",
 };
 
-const SANS = "'Segoe UI','Helvetica Neue',Arial,sans-serif";
-const MONO = "'JetBrains Mono','Fira Code',Consolas,'Courier New',monospace";
+// ---------------------------------------------------------------- pixel font
 
-const esc = (s) =>
-  String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const FONT = {
+  A: [".###.", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+  B: ["####.", "#...#", "#...#", "####.", "#...#", "#...#", "####."],
+  C: [".###.", "#...#", "#....", "#....", "#....", "#...#", ".###."],
+  D: ["####.", "#...#", "#...#", "#...#", "#...#", "#...#", "####."],
+  E: ["#####", "#....", "#....", "####.", "#....", "#....", "#####"],
+  F: ["#####", "#....", "#....", "####.", "#....", "#....", "#...."],
+  G: [".###.", "#...#", "#....", "#.###", "#...#", "#...#", ".####"],
+  H: ["#...#", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
+  I: [".###.", "..#..", "..#..", "..#..", "..#..", "..#..", ".###."],
+  J: ["..###", "...#.", "...#.", "...#.", "...#.", "#..#.", ".##.."],
+  K: ["#...#", "#..#.", "#.#..", "##...", "#.#..", "#..#.", "#...#"],
+  L: ["#....", "#....", "#....", "#....", "#....", "#....", "#####"],
+  M: ["#...#", "##.##", "#.#.#", "#.#.#", "#...#", "#...#", "#...#"],
+  N: ["#...#", "#...#", "##..#", "#.#.#", "#..##", "#...#", "#...#"],
+  O: [".###.", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+  P: ["####.", "#...#", "#...#", "####.", "#....", "#....", "#...."],
+  Q: [".###.", "#...#", "#...#", "#...#", "#.#.#", "#..#.", ".##.#"],
+  R: ["####.", "#...#", "#...#", "####.", "#.#..", "#..#.", "#...#"],
+  S: [".####", "#....", "#....", ".###.", "....#", "....#", "####."],
+  T: ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "..#.."],
+  U: ["#...#", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+  V: ["#...#", "#...#", "#...#", "#...#", "#...#", ".#.#.", "..#.."],
+  W: ["#...#", "#...#", "#...#", "#.#.#", "#.#.#", "#.#.#", ".#.#."],
+  X: ["#...#", "#...#", ".#.#.", "..#..", ".#.#.", "#...#", "#...#"],
+  Y: ["#...#", "#...#", ".#.#.", "..#..", "..#..", "..#..", "..#.."],
+  Z: ["#####", "....#", "...#.", "..#..", ".#...", "#....", "#####"],
+  0: [".###.", "#...#", "#..##", "#.#.#", "##..#", "#...#", ".###."],
+  1: ["..#..", ".##..", "..#..", "..#..", "..#..", "..#..", ".###."],
+  2: [".###.", "#...#", "....#", "...#.", "..#..", ".#...", "#####"],
+  3: ["#####", "...#.", "..#..", "...#.", "....#", "#...#", ".###."],
+  4: ["...#.", "..##.", ".#.#.", "#..#.", "#####", "...#.", "...#."],
+  5: ["#####", "#....", "####.", "....#", "....#", "#...#", ".###."],
+  6: ["..##.", ".#...", "#....", "####.", "#...#", "#...#", ".###."],
+  7: ["#####", "....#", "...#.", "..#..", ".#...", ".#...", ".#..."],
+  8: [".###.", "#...#", "#...#", ".###.", "#...#", "#...#", ".###."],
+  9: [".###.", "#...#", "#...#", ".####", "....#", "...#.", ".##.."],
+  " ": [".....", ".....", ".....", ".....", ".....", ".....", "....."],
+  ".": [".....", ".....", ".....", ".....", ".....", ".##..", ".##.."],
+  ",": [".....", ".....", ".....", ".....", ".##..", "..#..", ".#..."],
+  ":": [".....", ".##..", ".##..", ".....", ".##..", ".##..", "....."],
+  "!": ["..#..", "..#..", "..#..", "..#..", "..#..", ".....", "..#.."],
+  "?": [".###.", "#...#", "....#", "...#.", "..#..", ".....", "..#.."],
+  "-": [".....", ".....", ".....", ".###.", ".....", ".....", "....."],
+  "+": [".....", "..#..", "..#..", "#####", "..#..", "..#..", "....."],
+  "/": ["....#", "....#", "...#.", "..#..", ".#...", "#....", "#...."],
+  "'": ["..#..", "..#..", ".#...", ".....", ".....", ".....", "....."],
+  "(": ["...#.", "..#..", ".#...", ".#...", ".#...", "..#..", "...#."],
+  ")": [".#...", "..#..", "...#.", "...#.", "...#.", "..#..", ".#..."],
+  "%": ["##..#", "##..#", "...#.", "..#..", ".#...", "#..##", "#..##"],
+  "#": [".#.#.", ".#.#.", "#####", ".#.#.", "#####", ".#.#.", ".#.#."],
+  "&": [".##..", "#..#.", "#.#..", ".#...", "#.#.#", "#..#.", ".##.#"],
+  "·": [".....", ".....", ".....", "..#..", ".....", ".....", "....."],
+  "©": [".###.", "#...#", "#.###", "#.#.#", "#.###", "#...#", ".###."],
+  "▶": ["#....", "##...", "###..", "####.", "###..", "##...", "#...."],
+  "✓": [".....", "....#", "...##", "#.##.", "###..", ".#...", "....."],
+  "★": ["..#..", "..#..", "#####", ".###.", ".###.", ".#.#.", "#...#"],
+  "♥": [".....", ".#.#.", "#####", "#####", ".###.", "..#..", "....."],
+};
 
-// Seeded RNG so the starfield is stable between builds.
+const missing = new Set();
+const textW = (str, s) => [...str].length * 6 * s - s;
+
+// Pixel text as a single <path>. Optional shadow, anchor and class.
+function ptext(str, x, y, s, fill, o = {}) {
+  str = String(str).toUpperCase();
+  const w = textW(str, s);
+  let x0 = o.anchor === "middle" ? x - w / 2 : o.anchor === "end" ? x - w : x;
+  x0 = Math.round(x0);
+  let d = "";
+  [...str].forEach((ch, i) => {
+    let g = FONT[ch];
+    if (!g) {
+      missing.add(ch);
+      g = FONT["?"];
+    }
+    const cx = x0 + i * 6 * s;
+    g.forEach((row, r) => {
+      for (let c = 0; c < 5; ) {
+        if (row[c] !== "#") { c++; continue; }
+        let e = c;
+        while (e < 5 && row[e] === "#") e++;
+        d += `M${cx + c * s},${y + r * s}h${(e - c) * s}v${s}h${-(e - c) * s}z`;
+        c = e;
+      }
+    });
+  });
+  const shadow = o.shadow
+    ? `<path d="${d}" fill="${o.shadow}" transform="translate(${o.sd || s},${o.sd || s})"/>`
+    : "";
+  const attrs = (o.cls ? ` class="${o.cls}"` : "") + (o.style ? ` style="${o.style}"` : "");
+  return `<g${attrs}>${shadow}<path d="${d}" fill="${fill}"/></g>`;
+}
+
+// Pixel sprite from rows of palette keys ("." = transparent).
+function sprite(rows, pal, x, y, s, attrs = "") {
+  const paths = {};
+  rows.forEach((row, r) => {
+    for (let c = 0; c < row.length; ) {
+      const k = row[c];
+      if (k === ".") { c++; continue; }
+      let e = c;
+      while (e < row.length && row[e] === k) e++;
+      paths[k] = (paths[k] || "") + `M${x + c * s},${y + r * s}h${(e - c) * s}v${s}h${-(e - c) * s}z`;
+      c = e;
+    }
+  });
+  const body = Object.entries(paths).map(([k, d]) => `<path d="${d}" fill="${pal[k]}"/>`).join("");
+  return `<g${attrs ? " " + attrs : ""}>${body}</g>`;
+}
+
+// Rectangle with pixel-notched corners.
+const notch = (x, y, w, h, n) =>
+  `M${x + n},${y}H${x + w - n}V${y + n}H${x + w}V${y + h - n}H${x + w - n}V${y + h}H${x + n}V${y + h - n}H${x}V${y + n}H${x + n}Z`;
+
+function frame(x, y, w, h, p, border, fill) {
+  return `<path d="${notch(x, y, w, h, p)}" fill="${border}"/><path d="${notch(x + p, y + p, w - 2 * p, h - 2 * p, p)}" fill="${fill}"/>`;
+}
+
 function rng(seed) {
   return () => {
     seed = (seed * 1664525 + 1013904223) % 4294967296;
@@ -66,289 +208,352 @@ function rng(seed) {
   };
 }
 
-function stars(w, h, count, seed, maxY = h) {
-  const r = rng(seed);
-  let out = "";
-  for (let i = 0; i < count; i++) {
-    const x = (r() * w).toFixed(1);
-    const y = (r() * maxY).toFixed(1);
-    const rad = (0.4 + r() * 1.2).toFixed(2);
-    const op = (0.3 + r() * 0.7).toFixed(2);
-    const twinkle = r() < 0.2;
-    const delay = (r() * 3).toFixed(2);
-    out += twinkle
-      ? `<circle class="tw" style="animation-delay:${delay}s" cx="${x}" cy="${y}" r="${rad}" fill="#fff"/>`
-      : `<circle cx="${x}" cy="${y}" r="${rad}" fill="#fff" opacity="${op}"/>`;
+const BASE_CSS = `
+.blink{animation:bl 1s steps(1) infinite}
+@keyframes bl{0%{opacity:1}50%{opacity:0}100%{opacity:0}}
+.fa{animation:fa .8s steps(1) infinite}
+@keyframes fa{0%{opacity:1}50%{opacity:0}100%{opacity:0}}
+.fb{opacity:0;animation:fb .8s steps(1) infinite}
+@keyframes fb{0%{opacity:0}50%{opacity:1}100%{opacity:1}}
+.tw{animation:tw 2.4s steps(1) infinite}
+@keyframes tw{0%{opacity:1}70%{opacity:.2}100%{opacity:.2}}
+.bob{animation:bob 1s steps(1) infinite}
+@keyframes bob{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(-6px)}}
+`;
+
+// A full-width arcade panel: blue notched frame, dark inside, CRT scanlines on top.
+function panel(W, H, body, css = "") {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges">
+<defs>
+  <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".35"/></pattern>
+  <clipPath id="inner"><path d="${notch(4, 4, W - 8, H - 8, 4)}"/></clipPath>
+  <clipPath id="outer"><path d="${notch(0, 0, W, H, 4)}"/></clipPath>
+  <style>${BASE_CSS}${css}</style>
+</defs>
+${frame(0, 0, W, H, 4, P.maze, P.bg)}
+<g clip-path="url(#inner)">
+${body}
+</g>
+<rect width="${W}" height="${H}" fill="url(#scan)" clip-path="url(#outer)"/>
+</svg>
+`;
+}
+
+function header(text, y, color = P.yellow) {
+  return ptext(text, 450, y, 3, color, { anchor: "middle", shadow: P.plum, sd: 3 });
+}
+
+// ---------------------------------------------------------------- sprites
+
+const INVADER_A = [
+  "..g.....g..",
+  "...g...g...",
+  "..ggggggg..",
+  ".gg.ggg.gg.",
+  "ggggggggggg",
+  "g.ggggggg.g",
+  "g.g.....g.g",
+  "...gg.gg...",
+];
+const INVADER_B = [
+  "..g.....g..",
+  "g..g...g..g",
+  "g.ggggggg.g",
+  "ggg.ggg.ggg",
+  "ggggggggggg",
+  ".ggggggggg.",
+  "..g.....g..",
+  ".g.......g.",
+];
+
+const AVATAR = [
+  "...hhhhhh...",
+  "..hhhhhhhh..",
+  "..hsssssss..",
+  "..skssssks..",
+  "..ssssssss..",
+  "..sssmmsss..",
+  "...ssssss...",
+  "....ssss....",
+  ".bbbbbbbbbb.",
+  "bbbbwbbwbbbb",
+  "bbbbwbbwbbbb",
+  "bsgggugggssb",
+  "..gggggggg..",
+  ".GGGGGGGGGG.",
+];
+const AVATAR_PAL = {
+  h: "#3b2a1a", s: P.peach, k: P.black, m: P.plum, b: P.red,
+  w: P.white, g: P.lgrey, G: P.dgrey, u: P.blue,
+};
+
+const SPRITES = {
+  sword: [["......cw", ".....cw.", "....cw..", ".y.cw...", "..yy....", ".byy....", "bb..y...", "b......."],
+    { c: P.blue, w: P.white, y: P.yellow, b: P.brown }],
+  scroll: [["........", ".oooooo.", ".pppppp.", ".pkkkkp.", ".pppppp.", ".pkkkpp.", ".pppppp.", ".oooooo."],
+    { o: P.brown, p: P.peach, k: P.dgrey }],
+  hammer: [[".ggggg..", "gggggg..", ".ggggg..", "...bb...", "...bb...", "...bb...", "...bb...", "...bb..."],
+    { g: P.lgrey, b: P.orange }],
+  shield: [[".dddddd.", "dnnnnnnd", "dnnwwnnd", "dnwwwwnd", "dnnwwnnd", ".dnnnnd.", "..dnnd..", "...dd..."],
+    { d: "#008751", n: P.green, w: P.white }],
+  mug: [[".w..w...", "..w..w..", "........", "mmmmmm..", "mccccmmm", "mmmmmm.m", "mmmmmmm.", ".mmmm..."],
+    { w: P.lgrey, m: P.brown, c: "#3b2a1a" }],
+  staff: [["....ppp.", "....ppp.", ".....i..", "....i...", "...i....", "..i.....", ".i......", "i......."],
+    { p: P.pink, i: P.indigo }],
+  chest: [["........", ".bbbbbb.", "bbbbbbbb", "yyyyyyyy", "bbbyybbb", "bbbyybbb", "bbbbbbbb", "........"],
+    { b: P.brown, y: P.yellow }],
+  crystal: [["...rr...", "..rppr..", ".rpwppr.", "rppwpppr", ".rppppr.", "..rppr..", "...rr...", "........"],
+    { r: P.red, p: P.pink, w: P.white }],
+  book: [[".DDDDDD.", ".DuuuuDw", ".DuyyuDw", ".DuyyuDw", ".DuuuuDw", ".DuuuuDw", ".DDDDDDw", "..wwwww."],
+    { D: P.navy, u: P.blue, y: P.yellow, w: P.white }],
+};
+
+const TROPHY = ["y.yyyy.y", "yyyyyyyy", "y.yyyy.y", "..yyyy..", "...yy...", "...yy...", "..oooo..", ".oooooo."];
+const TROPHY_PAL = {
+  gold: { y: P.yellow, o: P.brown },
+  silver: { y: P.lgrey, o: P.dgrey },
+  bronze: { y: P.orange, o: P.brown },
+  purple: { y: P.pink, o: P.plum },
+};
+
+const CHOMP_OPEN = ["..yyy..", ".yyyyy.", "yyyy...", "yyy....", "yyyy...", ".yyyyy.", "..yyy.."];
+const CHOMP_SHUT = ["..yyy..", ".yyyyy.", "yyyyyyy", "yyyyyyy", "yyyyyyy", ".yyyyy.", "..yyy.."];
+const GHOST = ["..rrr..", ".rrrrr.", "rwbrwbr", "rrrrrrr", "rrrrrrr", "rrrrrrr", "r.r.r.r"];
+
+// ---------------------------------------------------------------- panels
+
+function titleScreen() {
+  const W = 900, H = 330;
+  const r = rng(11);
+  let stars = "";
+  for (let i = 0; i < 70; i++) {
+    const x = 8 + Math.floor(r() * 884), y = 56 + Math.floor(r() * 170);
+    const tw = r() < 0.3 ? ` class="tw" style="animation-delay:${(r() * 2.4).toFixed(2)}s"` : "";
+    stars += `<rect${tw} x="${x}" y="${y}" width="2" height="2" fill="${r() < 0.5 ? P.lgrey : P.white}" opacity=".7"/>`;
   }
-  return out;
+  let city = "";
+  for (let x = 8; x < 892; ) {
+    const bw = 30 + Math.floor(r() * 45), bh = 20 + Math.floor(r() * 50), top = 300 - bh;
+    city += `<rect x="${x}" y="${top}" width="${bw}" height="${bh}" fill="${P.navy}"/>`;
+    for (let wy = top + 6; wy < 294; wy += 10)
+      for (let wx = x + 5; wx < x + bw - 6; wx += 9)
+        if (r() < 0.35) {
+          const fl = r() < 0.12 ? ` class="tw" style="animation-delay:${(r() * 2.4).toFixed(2)}s"` : "";
+          city += `<rect${fl} x="${wx}" y="${wy}" width="4" height="4" fill="${P.yellow}" opacity=".85"/>`;
+        }
+    x += bw + 2;
+  }
+  const inv = (x, color) =>
+    sprite(INVADER_A, { g: color }, x, 104, 5, `class="fa"`) + sprite(INVADER_B, { g: color }, x, 104, 5, `class="fb"`);
+
+  return panel(W, H, `
+${stars}
+${ptext("1UP", 60, 18, 2, P.red)}${ptext("002026", 60, 38, 2, P.white)}
+${ptext("HI-SCORE", 450, 18, 2, P.red, { anchor: "middle" })}${ptext("999999", 450, 38, 2, P.white, { anchor: "middle" })}
+${ptext("CREDIT", 840, 18, 2, P.red, { anchor: "end" })}${ptext("01", 840, 38, 2, P.white, { anchor: "end" })}
+${ptext("UBT STUDIOS PRESENTS", 450, 72, 2, P.lgrey, { anchor: "middle" })}
+${inv(60, P.green)}${inv(785, P.pink)}
+${ptext(player.name, 450, 98, 7, P.yellow, { anchor: "middle", shadow: P.red, sd: 5 })}
+${ptext(player.class, 450, 172, 3, P.blue, { anchor: "middle" })}
+${ptext("▶ PRESS START", 450, 210, 3, P.white, { anchor: "middle", cls: "blink" })}
+${city}
+<rect x="0" y="300" width="${W}" height="2" fill="${P.maze}"/>
+<rect x="0" y="302" width="${W}" height="${H}" fill="${P.black}"/>
+${ptext(player.footer, 450, 309, 2, P.dgrey, { anchor: "middle" })}
+`);
 }
 
-const baseStyle = `
-  .tw{animation:tw 3s ease-in-out infinite}
-  @keyframes tw{0%,100%{opacity:.15}50%{opacity:1}}
-  .blink{animation:bl 1.4s steps(1) infinite}
-  @keyframes bl{50%{opacity:0}}
-  .pulse{animation:pu 2s ease-in-out infinite}
-  @keyframes pu{0%,100%{opacity:1}50%{opacity:.35}}
-  .spin{transform-box:fill-box;transform-origin:center;animation:sp 30s linear infinite}
-  @keyframes sp{to{transform:rotate(360deg)}}
-`;
-
-function corners(x, y, w, h, len = 18, color = C.cyan) {
-  const p = (d) => `<path d="${d}" fill="none" stroke="${color}" stroke-width="2" opacity=".8"/>`;
-  return (
-    p(`M${x},${y + len} V${y} H${x + len}`) +
-    p(`M${x + w - len},${y} H${x + w} V${y + len}`) +
-    p(`M${x},${y + h - len} V${y + h} H${x + len}`) +
-    p(`M${x + w - len},${y + h} H${x + w} V${y + h - len}`)
-  );
-}
-
-function banner() {
-  const W = 900, H = 280;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-<defs>
-  <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="${C.bg0}"/><stop offset=".55" stop-color="${C.bg1}"/><stop offset="1" stop-color="${C.bg2}"/>
-  </linearGradient>
-  <radialGradient id="neb1"><stop offset="0" stop-color="${C.violet}" stop-opacity=".45"/><stop offset="1" stop-color="${C.violet}" stop-opacity="0"/></radialGradient>
-  <radialGradient id="neb2"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".25"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></radialGradient>
-  <radialGradient id="planet" cx=".35" cy=".35" r=".75">
-    <stop offset="0" stop-color="#fde68a"/><stop offset=".5" stop-color="#f59e0b"/><stop offset="1" stop-color="#7c2d12"/>
-  </radialGradient>
-  <radialGradient id="glow"><stop offset="0" stop-color="#fbbf24" stop-opacity=".35"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></radialGradient>
-  <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#1e1b4b"/><stop offset=".3" stop-color="${C.bg1}"/>
-  </linearGradient>
-  <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e0e7ff"/><stop offset="1" stop-color="#c4b5fd"/>
-  </linearGradient>
-  <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/>
-  </linearGradient>
-  <clipPath id="round"><rect width="${W}" height="${H}" rx="16"/></clipPath>
-  <clipPath id="ringFront"><rect x="700" y="78" width="180" height="60"/></clipPath>
-  <style>${baseStyle}
-    .shoot{animation:sh 7s ease-in infinite}
-    @keyframes sh{0%{transform:translate(0,0);opacity:0}3%{opacity:1}14%{transform:translate(260px,110px);opacity:0}100%{transform:translate(260px,110px);opacity:0}}
-    .float{animation:fl 5s ease-in-out infinite}
-    @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .flame{animation:fm .25s ease-in-out infinite alternate}
-    @keyframes fm{from{opacity:.6}to{opacity:1}}
-  </style>
-</defs>
-<g clip-path="url(#round)">
-  <rect width="${W}" height="${H}" fill="url(#sky)"/>
-  <ellipse cx="260" cy="90" rx="260" ry="120" fill="url(#neb1)"/>
-  <ellipse cx="640" cy="200" rx="240" ry="110" fill="url(#neb2)"/>
-  ${stars(W, H, 150, 7, 250)}
-
-  <g class="shoot"><line x1="120" y1="30" x2="190" y2="58" stroke="url(#trail)" stroke-width="2" stroke-linecap="round"/></g>
-
-  <!-- moon -->
-  <circle cx="92" cy="112" r="11" fill="#cbd5e1"/>
-  <circle cx="88" cy="109" r="2.5" fill="#94a3b8"/><circle cx="96" cy="116" r="1.8" fill="#94a3b8"/>
-
-  <!-- ringed planet -->
-  <circle cx="790" cy="78" r="90" fill="url(#glow)"/>
-  <g transform="rotate(-18 790 78)">
-    <ellipse cx="790" cy="78" rx="72" ry="14" fill="none" stroke="#fcd34d" stroke-width="3" opacity=".45"/>
-    <circle cx="790" cy="78" r="40" fill="url(#planet)"/>
-    <path d="M752,70 Q790,62 828,70" fill="none" stroke="#7c2d12" stroke-width="3" opacity=".35"/>
-    <path d="M755,90 Q790,84 826,92" fill="none" stroke="#7c2d12" stroke-width="2" opacity=".3"/>
-    <ellipse cx="790" cy="78" rx="72" ry="14" fill="none" stroke="#fcd34d" stroke-width="3" opacity=".85" clip-path="url(#ringFront)"/>
-  </g>
-
-  <!-- horizon -->
-  <ellipse cx="450" cy="520" rx="700" ry="280" fill="url(#ground)" stroke="${C.cyan}" stroke-width="1.5" stroke-opacity=".55"/>
-  <ellipse cx="450" cy="520" rx="702" ry="283" fill="none" stroke="${C.violet}" stroke-width="6" stroke-opacity=".15"/>
-
-  <!-- rocket -->
-  <g transform="translate(150 196) rotate(40)">
-    <g class="float">
-      <path class="flame" d="M-4.5,14 Q0,34 4.5,14Z" fill="${C.amber}"/>
-      <path d="M-2.5,14 Q0,26 2.5,14Z" fill="#fff"/>
-      <path d="M-6,6 L-13,17 L-6,14Z" fill="${C.violet}"/>
-      <path d="M6,6 L13,17 L6,14Z" fill="${C.violet}"/>
-      <path d="M0,-22 C8,-14 8,6 6,14 L-6,14 C-8,6 -8,-14 0,-22Z" fill="#e2e8f0"/>
-      <circle cx="0" cy="-5" r="3.6" fill="${C.cyan}" stroke="#334155" stroke-width="1.5"/>
-    </g>
-  </g>
-
-  <!-- HUD -->
-  <circle class="blink" cx="34" cy="32" r="4" fill="${C.green}"/>
-  <text x="46" y="36" font-family="${MONO}" font-size="11" letter-spacing="2" fill="${C.cyan}">TRANSMISSION LIVE</text>
-
-  <text x="450" y="86" text-anchor="middle" font-family="${MONO}" font-size="12" letter-spacing="6" fill="${C.violet}">COMMANDER</text>
-  <text x="450" y="138" text-anchor="middle" font-family="${SANS}" font-size="56" font-weight="800" letter-spacing="10" fill="url(#title)">${esc(profile.name)}</text>
-  <line x1="300" y1="160" x2="420" y2="160" stroke="${C.cyan}" stroke-opacity=".6"/>
-  <line x1="480" y1="160" x2="600" y2="160" stroke="${C.cyan}" stroke-opacity=".6"/>
-  <circle cx="450" cy="160" r="6" fill="none" stroke="${C.cyan}"/>
-  <circle cx="450" cy="160" r="2" fill="${C.cyan}"/>
-  <circle cx="432" cy="160" r="1.6" fill="${C.cyan}"/><circle cx="468" cy="160" r="1.6" fill="${C.cyan}"/>
-  <text x="450" y="194" text-anchor="middle" font-family="${SANS}" font-size="17" fill="${C.soft}">${esc(profile.subtitle)}</text>
-
-  <text x="46" y="54" font-family="${MONO}" font-size="10" letter-spacing="2" fill="${C.dim}">${esc(profile.coords)}</text>
-  <text x="872" y="264" text-anchor="end" font-family="${MONO}" font-size="10" letter-spacing="2" fill="${C.dim}">ORBIT STABLE</text>
-</g>
-<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="none" stroke="${C.line}"/>
-</svg>
-`;
-}
-
-function briefing() {
-  const W = 900, H = 360;
-  const fieldRows = [...profile.fields, ["STATUS", null]]
-    .map(([label, value], i) => {
-      const y = 186 + i * 34;
-      const val =
-        value === null
-          ? `<circle class="blink" cx="166" cy="${y - 5}" r="4" fill="${C.green}"/>
-             <text x="178" y="${y}" font-family="${SANS}" font-size="15" font-weight="600" fill="${C.green}">${esc(profile.status)}</text>`
-          : `<text x="160" y="${y}" font-family="${SANS}" font-size="15" fill="#e2e8f0">${esc(value)}</text>`;
-      return `<text x="40" y="${y}" font-family="${MONO}" font-size="11" letter-spacing="3" fill="${C.dim}">${label}</text>${val}
-        <line x1="40" y1="${y + 12}" x2="440" y2="${y + 12}" stroke="#1e293b"/>`;
-    })
+function playerSelect() {
+  const W = 900, H = 410;
+  const rows = player.stats
+    .map(([k, v], i) => ptext(k, 290, 84 + i * 30, 2, P.orange) + ptext(v, 440, 84 + i * 30, 2, P.white))
     .join("\n");
-
-  const systemRows = profile.systems
-    .map((s, i) => {
-      const y = 122 + i * 58;
+  const sy = 84 + player.stats.length * 30;
+  const status =
+    ptext("STATUS:", 290, sy, 2, P.orange) +
+    `<rect class="blink" x="440" y="${sy + 2}" width="10" height="10" fill="${P.green}"/>` +
+    ptext(player.status, 460, sy, 2, P.green);
+  const bars = player.bars
+    .map(([label, n, val, color], i) => {
+      const y = 304 + i * 30;
       let cells = "";
-      for (let c = 0; c < 10; c++) {
-        const x = 500 + c * 36;
-        const on = c < s.level;
-        const cls = on && c === s.level - 1 ? ` class="pulse"` : "";
-        cells += `<rect${cls} x="${x}" y="${y + 26}" width="30" height="8" rx="2" fill="${on ? "url(#cell)" : "#1e293b"}"/>`;
-      }
-      return `<text x="500" y="${y}" font-family="${SANS}" font-size="16" font-weight="700" fill="${C.text}">${esc(s.name)}</text>
-        <text x="500" y="${y + 17}" font-family="${MONO}" font-size="11" fill="${C.muted}">${esc(s.stack)}</text>
-        <text x="854" y="${y}" text-anchor="end" font-family="${MONO}" font-size="10" letter-spacing="2" fill="${C.green}">ONLINE</text>
-        ${cells}`;
+      for (let c = 0; c < 16; c++)
+        cells += `<rect x="${340 + c * 20}" y="${y}" width="16" height="14" fill="${c < n ? color : P.empty}"/>`;
+      return ptext(label, 290, y, 2, color) + cells + ptext(val, 680, y, 2, P.lgrey);
     })
     .join("\n");
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-<defs>
-  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="${C.bg1}"/><stop offset="1" stop-color="#120d33"/>
-  </linearGradient>
-  <linearGradient id="cell" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="${C.cyan}"/><stop offset="1" stop-color="${C.violet}"/>
-  </linearGradient>
-  <linearGradient id="visor" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="${C.cyan}"/><stop offset="1" stop-color="#6d28d9"/>
-  </linearGradient>
-  <clipPath id="round"><rect width="${W}" height="${H}" rx="16"/></clipPath>
-  <style>${baseStyle}</style>
-</defs>
-<g clip-path="url(#round)">
-  <rect width="${W}" height="${H}" fill="url(#bg)"/>
-  ${stars(W, H, 50, 21)}
-</g>
-<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="none" stroke="${C.line}"/>
-${corners(14, 14, W - 28, H - 28)}
-
-<text x="450" y="46" text-anchor="middle" font-family="${MONO}" font-size="13" font-weight="700" letter-spacing="5" fill="${C.cyan}">— MISSION BRIEFING —</text>
-
-<!-- helmet -->
-<circle class="spin" cx="84" cy="106" r="46" fill="none" stroke="${C.violet}" stroke-dasharray="3 6" opacity=".6"/>
-<line x1="84" y1="68" x2="84" y2="58" stroke="${C.soft}" stroke-width="2"/>
-<circle class="blink" cx="84" cy="56" r="3" fill="${C.amber}"/>
-<circle cx="84" cy="106" r="36" fill="#1e1b4b" stroke="${C.soft}" stroke-width="2.5"/>
-<rect x="60" y="90" width="48" height="30" rx="14" fill="url(#visor)" opacity=".9"/>
-<path d="M68,97 Q74,93 82,94" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
-
-<text x="146" y="104" font-family="${SANS}" font-size="30" font-weight="800" letter-spacing="3" fill="${C.text}">${esc(profile.name)}</text>
-<text x="147" y="130" font-family="${SANS}" font-size="15" font-style="italic" fill="${C.violet}">${esc(profile.role)}</text>
-
-${fieldRows}
-
-<line x1="470" y1="76" x2="470" y2="330" stroke="${C.line}"/>
-<text x="500" y="88" font-family="${MONO}" font-size="11" font-weight="700" letter-spacing="4" fill="${C.cyan}">SHIP SYSTEMS</text>
-${systemRows}
-</svg>
-`;
-}
-
-function missionLog() {
-  const W = 900;
-  const rowH = 100, gap = 16, top = 70;
-  const slotY = top + missions.length * (rowH + gap);
-  const H = slotY + 44 + 30;
-
-  const rows = missions
-    .map((m, i) => {
-      const y = top + i * (rowH + gap);
-      const cy = y + 50;
-      const done = m.status === "LANDED";
-      const color = done ? C.green : C.amber;
-      const x0 = 145, x1 = 680;
-      const rx = x0 + (x1 - x0) * Math.max(0, Math.min(1, m.progress ?? (done ? 1 : 0.5)));
-      const num = String(i + 1).padStart(2, "0");
-      return `<rect x="30" y="${y}" width="840" height="${rowH}" rx="12" fill="${C.panel}" stroke="${C.line}"/>
-  <circle class="spin" cx="90" cy="${cy}" r="38" fill="none" stroke="${color}" stroke-dasharray="2 5" opacity=".6"/>
-  <circle cx="90" cy="${cy}" r="30" fill="#1e1b4b" stroke="${color}" stroke-width="2"/>
-  <text x="90" y="${cy - 6}" text-anchor="middle" font-family="${MONO}" font-size="8" letter-spacing="2" fill="${C.muted}">MISSION</text>
-  <text x="90" y="${cy + 13}" text-anchor="middle" font-family="${MONO}" font-size="18" font-weight="700" fill="${color}">${num}</text>
-  <text x="${x0}" y="${y + 38}" font-family="${SANS}" font-size="17" font-weight="700" letter-spacing="1.5" fill="${C.text}">${esc(m.name.toUpperCase())}</text>
-  <text x="${x0}" y="${y + 62}" font-family="${SANS}" font-size="14" fill="${C.muted}">${esc(m.description)}</text>
-  <line x1="${x0}" y1="${y + 80}" x2="${x1}" y2="${y + 80}" stroke="${C.line}" stroke-width="2" stroke-dasharray="4 5"/>
-  <line x1="${x0}" y1="${y + 80}" x2="${rx}" y2="${y + 80}" stroke="url(#traj)" stroke-width="2.5"/>
-  <circle class="pulse" cx="${rx}" cy="${y + 80}" r="7" fill="${color}" opacity=".35"/>
-  <circle cx="${rx}" cy="${y + 80}" r="3.5" fill="${color}"/>
-  <circle cx="${x1}" cy="${y + 80}" r="4" fill="none" stroke="${C.muted}"/>
-  <rect x="716" y="${cy - 14}" width="130" height="28" rx="14" fill="none" stroke="${color}"/>
-  <circle class="${done ? "" : "blink"}" cx="738" cy="${cy}" r="4" fill="${color}"/>
-  <text x="790" y="${cy + 4}" text-anchor="middle" font-family="${MONO}" font-size="11" font-weight="700" letter-spacing="2" fill="${color}">${esc(m.status)}</text>`;
-    })
-    .join("\n");
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-<defs>
-  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="${C.bg1}"/><stop offset="1" stop-color="#120d33"/>
-  </linearGradient>
-  <linearGradient id="traj" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.cyan}"/>
-  </linearGradient>
-  <clipPath id="round"><rect width="${W}" height="${H}" rx="16"/></clipPath>
-  <style>${baseStyle}</style>
-</defs>
-<g clip-path="url(#round)">
-  <rect width="${W}" height="${H}" fill="url(#bg)"/>
-  ${stars(W, H, 40, 42)}
-</g>
-<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="none" stroke="${C.line}"/>
-${corners(14, 14, W - 28, H - 28)}
-
-<text x="450" y="46" text-anchor="middle" font-family="${MONO}" font-size="13" font-weight="700" letter-spacing="5" fill="${C.cyan}">— MISSION LOG —</text>
+  return panel(W, H, `
+${header("PLAYER SELECT", 26)}
+${frame(50, 78, 200, 220, 4, P.maze, P.slot)}
+${sprite(AVATAR, AVATAR_PAL, 78, 106, 12, `class="bob"`)}
+${ptext("▶", 92, 316, 3, P.red, { cls: "blink" })}
+${ptext("P1 ERIK", 160, 316, 3, P.white, { anchor: "middle" })}
 ${rows}
-<rect x="30" y="${slotY}" width="840" height="44" rx="12" fill="none" stroke="${C.line}" stroke-dasharray="6 6"/>
-<text x="450" y="${slotY + 27}" text-anchor="middle" font-family="${MONO}" font-size="12" letter-spacing="3" fill="${C.dim}">+ NEXT MISSION — AWAITING LAUNCH</text>
+${status}
+${bars}
+`);
+}
+
+function inventoryPanel() {
+  const W = 900, cols = 3, sw = 270, sh = 84, gap = 15, top = 70;
+  const nrows = Math.ceil(inventory.length / cols);
+  const H = top + nrows * (sh + gap) + 14;
+  const slots = inventory
+    .map((it, i) => {
+      const x = 30 + (i % cols) * (sw + gap), y = top + Math.floor(i / cols) * (sh + gap);
+      const [rows, pal] = SPRITES[it.sprite];
+      const cursor = i === 0
+        ? `<rect class="blink" x="${x - 3}" y="${y - 3}" width="${sw + 6}" height="${sh + 6}" fill="none" stroke="${P.yellow}" stroke-width="3"/>`
+        : "";
+      return frame(x, y, sw, sh, 3, P.maze, P.slot) + cursor +
+        sprite(rows, pal, x + 18, y + 18, 6) +
+        ptext(it.tech, x + 84, y + 18, 3, P.white) +
+        ptext(it.item, x + 84, y + 52, 2, P.orange);
+    })
+    .join("\n");
+  return panel(W, H, `
+${header("INVENTORY", 26)}
+${slots}
+`);
+}
+
+function questLog() {
+  const W = 900, ch = 160, gap = 16, top = 70;
+  const slotY = top + quests.length * (ch + gap);
+  const H = slotY + 50 + 24;
+  const cards = quests
+    .map((q, i) => {
+      const y = top + i * (ch + gap);
+      const done = q.progress >= 1;
+      const tagW = textW(q.type, 2) + 16;
+      const tagColor = q.type === "MAIN QUEST" ? P.red : P.indigo;
+      const status = done
+        ? ptext("✓ QUEST COMPLETE", 850, y + 25, 2, P.green, { anchor: "end" })
+        : ptext("▶ IN PROGRESS", 850, y + 25, 2, P.yellow, { anchor: "end", cls: "blink" });
+      const filled = Math.round(Math.max(0, Math.min(1, q.progress)) * 20);
+      let cells = "";
+      for (let c = 0; c < 20; c++)
+        cells += `<rect x="${170 + c * 26}" y="${y + 120}" width="22" height="14" fill="${c < filled ? (done ? P.green : P.yellow) : P.empty}"/>`;
+      return frame(30, y, 840, ch, 4, P.maze, P.slot) +
+        `<rect x="50" y="${y + 20}" width="${tagW}" height="24" fill="${tagColor}"/>` +
+        ptext(q.type, 58, y + 25, 2, P.white) + status +
+        ptext(q.name, 50, y + 60, 3, P.white) +
+        ptext(q.description, 50, y + 92, 2, P.lgrey) +
+        ptext("PROGRESS", 50, y + 120, 2, P.orange) + cells +
+        ptext(`${Math.round(q.progress * 100)}%`, 710, y + 120, 2, P.white);
+    })
+    .join("\n");
+  return panel(W, H, `
+${header("QUEST LOG", 26)}
+${cards}
+${frame(30, slotY, 840, 50, 4, P.dgrey, P.bg)}
+${ptext("? SIDE QUEST - NEW QUEST UNLOCKS SOON", 450, slotY + 18, 2, P.dgrey, { anchor: "middle" })}
+`);
+}
+
+function achievementsPanel() {
+  const W = 900, sw = 412, sh = 90, gap = 16, top = 70;
+  const H = top + Math.ceil(achievements.length / 2) * (sh + gap) + 14;
+  const slots = achievements
+    .map((a, i) => {
+      const x = 30 + (i % 2) * (sw + gap), y = top + Math.floor(i / 2) * (sh + gap);
+      return frame(x, y, sw, sh, 3, P.maze, P.slot) +
+        sprite(TROPHY, TROPHY_PAL[a.trophy], x + 18, y + 17, 7) +
+        `<rect class="tw" style="animation-delay:${(i * 0.6).toFixed(1)}s" x="${x + 70}" y="${y + 14}" width="4" height="4" fill="${P.white}"/>` +
+        ptext(a.name, x + 92, y + 22, 3, P.yellow) +
+        ptext(a.description, x + 92, y + 56, 2, P.lgrey);
+    })
+    .join("\n");
+  return panel(W, H, `
+${header("ACHIEVEMENTS", 26)}
+${ptext(`${achievements.length}/${achievements.length} UNLOCKED`, 862, 32, 2, P.green, { anchor: "end" })}
+${slots}
+`);
+}
+
+function gameOver() {
+  const W = 900, H = 190;
+  const lead = "CONTINUE? ";
+  const x0 = Math.round(450 - textW(lead + "9", 3) / 2);
+  let digits = "";
+  for (let n = 9; n >= 0; n--)
+    digits += ptext(String(n), x0 + lead.length * 18, 76, 3, P.red, { cls: "cd", style: `animation-delay:${9 - n}s` });
+  return panel(W, H, `
+${ptext("THANKS FOR PLAYING!", 450, 26, 4, P.yellow, { anchor: "middle", shadow: P.red, sd: 3 })}
+${ptext(lead, x0, 76, 3, P.white)}${digits}
+${ptext("▶ YES", 380, 116, 3, P.white, { anchor: "middle", cls: "blink" })}
+${ptext("NO", 530, 116, 3, P.dgrey, { anchor: "middle" })}
+${ptext("INSERT COIN · PRESS ★ TO STAR A REPO", 450, 156, 2, P.lgrey, { anchor: "middle" })}
+`, `.cd{opacity:0;animation:cd 10s steps(1) infinite}
+@keyframes cd{0%{opacity:1}10%{opacity:0}100%{opacity:0}}`);
+}
+
+// Small dark strip with a heading, used above third-party cards.
+function strip(text) {
+  const W = 900, H = 52;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges">
+<defs><style>${BASE_CSS}</style></defs>
+${frame(0, 0, W, H, 4, P.maze, P.bg)}
+${header(text, 15)}
 </svg>
 `;
 }
 
+function button(label, color) {
+  const W = 300, H = 60;
+  const full = "▶ " + label;
+  const x0 = Math.round(W / 2 - textW(full, 3) / 2);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges">
+<defs><style>${BASE_CSS}</style></defs>
+${frame(0, 0, W, H, 4, color, P.slot)}
+${ptext("▶", x0, 20, 3, P.yellow, { cls: "blink" })}
+${ptext(label, x0 + 36, 20, 3, P.white)}
+</svg>
+`;
+}
+
+// Row of pac-dots that a chomper eats while a ghost chases it.
 function divider() {
-  const W = 900, H = 40;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-<defs>
-  <linearGradient id="fadeL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.violet}" stop-opacity="0"/><stop offset="1" stop-color="${C.violet}" stop-opacity=".8"/></linearGradient>
-  <linearGradient id="fadeR" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.violet}" stop-opacity=".8"/><stop offset="1" stop-color="${C.violet}" stop-opacity="0"/></linearGradient>
-</defs>
-<line x1="120" y1="20" x2="420" y2="20" stroke="url(#fadeL)"/>
-<line x1="480" y1="20" x2="780" y2="20" stroke="url(#fadeR)"/>
-<circle cx="404" cy="20" r="2" fill="${C.cyan}"/><circle cx="496" cy="20" r="2" fill="${C.cyan}"/>
-<ellipse cx="450" cy="20" rx="22" ry="5" fill="none" stroke="${C.amber}" stroke-width="1.5" transform="rotate(-15 450 20)" opacity=".8"/>
-<circle cx="450" cy="20" r="8" fill="#f59e0b"/>
+  const W = 900, H = 32, dur = 8, start = -80, end = 960;
+  let dots = "";
+  for (let x = 30; x <= 870; x += 30) {
+    const f = (x - 10 - start) / (end - start);
+    dots += `<rect class="eat" style="animation-delay:${(-(1 - f) * dur).toFixed(2)}s" x="${x - 3}" y="13" width="6" height="6" fill="${P.peach}"/>`;
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges">
+<defs><style>${BASE_CSS}
+.run{animation:run ${dur}s linear infinite}
+@keyframes run{from{transform:translateX(${start}px)}to{transform:translateX(${end}px)}}
+.eat{animation:eat ${dur}s steps(1) infinite}
+@keyframes eat{0%{opacity:0}50%{opacity:1}100%{opacity:1}}
+.fa,.fb{animation-duration:.3s}
+</style></defs>
+<rect width="${W}" height="${H}" fill="${P.black}"/>
+${dots}
+<g class="run">
+  ${sprite(CHOMP_OPEN, { y: P.yellow }, 0, 5, 3, `class="fa"`)}${sprite(CHOMP_SHUT, { y: P.yellow }, 0, 5, 3, `class="fb"`)}
+  ${sprite(GHOST, { r: P.red, w: P.white, b: P.maze }, -50, 5, 3)}
+</g>
 </svg>
 `;
 }
 
-const out = __dirname;
-fs.writeFileSync(path.join(out, "banner.svg"), banner());
-fs.writeFileSync(path.join(out, "mission-briefing.svg"), briefing());
-fs.writeFileSync(path.join(out, "mission-log.svg"), missionLog());
-fs.writeFileSync(path.join(out, "divider.svg"), divider());
-console.log("Built banner.svg, mission-briefing.svg, mission-log.svg, divider.svg");
+// ---------------------------------------------------------------- write
+
+const files = {
+  "title-screen.svg": titleScreen(),
+  "player-select.svg": playerSelect(),
+  "inventory.svg": inventoryPanel(),
+  "quest-log.svg": questLog(),
+  "achievements.svg": achievementsPanel(),
+  "high-scores.svg": strip("HIGH SCORES"),
+  "player-2.svg": strip("PLAYER 2 - PRESS TO JOIN"),
+  "btn-linkedin.svg": button("LINKEDIN", P.blue),
+  "btn-email.svg": button("EMAIL", P.red),
+  "divider.svg": divider(),
+  "game-over.svg": gameOver(),
+};
+for (const [name, svg] of Object.entries(files)) fs.writeFileSync(path.join(__dirname, name), svg);
+console.log("Built " + Object.keys(files).join(", "));
+if (missing.size) console.warn("Missing glyphs (drawn as ?): " + [...missing].join(" "));

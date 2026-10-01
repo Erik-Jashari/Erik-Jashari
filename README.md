@@ -1,34 +1,46 @@
 <div align="center">
 
-<img src="assets/banner.svg" width="100%" alt="Erik Jashari: Full-Stack Developer, CSE Student at UBT, Ferizaj, Kosovo" />
+<img src="assets/title-screen.svg" width="100%" alt="Title screen: ERIK JASHARI, Full-Stack Developer. Press start." />
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=7DD3FC&center=true&vCenter=true&width=520&lines=Transmission+incoming...;Full-stack+developer+in+orbit;Currently+building:+Sports+Tournament+System;Open+to+internships" />
-
-<br/>
-
-[![Email](https://img.shields.io/badge/Email-0b0f2e?style=for-the-badge&logo=gmail&logoColor=7dd3fc)](mailto:erikjashari3@gmail.com) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0b0f2e?style=for-the-badge&logo=linkedin&logoColor=7dd3fc)](https://www.linkedin.com/in/eriki-jashari-204752354/) ![Signals received](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=6d28d9&label=SIGNALS%20RECEIVED)
+<img src="https://readme-typing-svg.demolab.com?font=Press+Start+2P&size=14&pause=1200&color=FFEC27&center=true&vCenter=true&width=720&lines=INSERT+COIN+TO+CONTINUE...;PLAYER+1:+ERIK+JASHARI;CURRENT+QUEST:+SPORTS+TOURNAMENT+SYSTEM;LOOKING+FOR+A+PARTY+(INTERNSHIPS)" alt="Typing text" />
 
 <img src="assets/divider.svg" width="100%" />
 
-<img src="assets/mission-briefing.svg" width="100%" alt="Mission briefing: Erik Jashari, Full-Stack Developer based in Ferizaj, Kosovo. CSE student at UBT. Speaks Albanian and English. Open to internships. Systems: Frontend (React, JavaScript, HTML, CSS), Backend (Node.js, Java, PHP), Databases (PostgreSQL, MySQL), Tools (Git, VS Code)." />
+<img src="assets/player-select.svg" width="100%" alt="Player select. Name: Erik Jashari. Class: Full-Stack Developer. Guild: UBT, Computer Science and Engineering. Home world: Ferizaj, Kosovo. Languages: Albanian, English. Main quest: Sports Tournament Management System. Status: looking for a party (open to internships)." />
 
 <img src="assets/divider.svg" width="100%" />
 
-<img src="assets/mission-log.svg" width="100%" alt="Mission log: 01 Sports Tournament Management System, manage tournaments, teams, fixtures and results. Status: in flight." />
+<img src="assets/inventory.svg" width="100%" alt="Inventory: React, JavaScript, HTML/CSS, Node.js, Java, PHP, SQL, Git, VS Code." />
 
 <img src="assets/divider.svg" width="100%" />
 
-### 🛰️ Equipment on board
-
-![Skills](https://skillicons.dev/icons?i=html,css,js,react,nodejs,php,java,mysql,postgres,git,vscode&perline=11&theme=dark)
+<img src="assets/quest-log.svg" width="100%" alt="Quest log. Main quest: Sports Tournament Management System, manage tournaments, teams, fixtures and results. In progress, 60%." />
 
 <img src="assets/divider.svg" width="100%" />
 
-### 📡 Telemetry
+<img src="assets/achievements.svg" width="100%" alt="Achievements: First Commit, Hello World, Survived Finals, Night Owl." />
 
-<img height="170" src="https://github-readme-stats.vercel.app/api?username=Erik-Jashari&show_icons=true&hide_border=true&card_width=420&bg_color=0b0f2e&title_color=7dd3fc&text_color=e2e8f0&icon_color=a78bfa" />
-<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&hide_border=true&card_width=420&bg_color=0b0f2e&title_color=7dd3fc&text_color=e2e8f0" />
+<img src="assets/divider.svg" width="100%" />
 
-<img src="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake-space.svg" alt="contribution graph eaten by a comet" />
+<img src="assets/high-scores.svg" width="100%" alt="High scores" />
+
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=Erik-Jashari&show_icons=true&border_radius=0&bg_color=0a0a14&title_color=ffec27&text_color=fff1e8&icon_color=ff004d&border_color=2121de" />
+<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&border_radius=0&bg_color=0a0a14&title_color=ffec27&text_color=fff1e8&border_color=2121de" />
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/pacman-contribution-graph-dark.svg" />
+  <img alt="Pac-Man eating my contribution graph" src="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/pacman-contribution-graph.svg" />
+</picture>
+
+<img src="assets/divider.svg" width="100%" />
+
+<img src="assets/player-2.svg" width="100%" alt="Player 2, press to join" />
+
+<a href="https://www.linkedin.com/in/eriki-jashari-204752354/"><img src="assets/btn-linkedin.svg" width="260" alt="LinkedIn" /></a>
+<a href="mailto:erikjashari3@gmail.com"><img src="assets/btn-email.svg" width="260" alt="Email" /></a>
+
+![Coins inserted](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=ff004d&label=COINS%20INSERTED)
+
+<img src="assets/game-over.svg" width="100%" alt="Thanks for playing! Continue?" />
 
 </div>
