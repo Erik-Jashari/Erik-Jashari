@@ -1,12 +1,14 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Erik%20Jashari&fontSize=48&fontColor=ffffff" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=150&section=header&text=Erik%20Jashari&fontSize=48&fontColor=ffffff" />
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=8B5CF6&center=true&width=500&lines=CS+%26+Engineering+Student+@+UBT;Full-stack+Developer;React+%C2%B7+Node.js+%C2%B7+Java" />
 
 <br/>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eriki-jashari-204752354/) [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:erikjashari3@gmail.com)![Views](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=8B5CF6)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eriki-jashari-204752354/) [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:erikjashari3@gmail.com)
+<br/>
+![Views](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=8B5CF6)
 
 </div>
 
