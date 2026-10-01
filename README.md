@@ -55,5 +55,5 @@ class Erik:
 </div>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake-dark.svg" />
-  <img alt="snake animation" src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_USERNAME/output/github-snake.svg" />
+  <img alt="snake animation" src="https://raw.githubusercontent.com/YOUR_USERNAME/Erik-Jashari/output/github-snake.svg" />
 </picture>
