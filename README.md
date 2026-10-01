@@ -1,16 +1,53 @@
-## 👋 Hi, I'm Erik
+<div align="center">
 
-🎓 CSE Student 2nd year learning full-stack web development.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Erik%20Jashari&fontSize=48&fontColor=ffffff" />
 
-## 🚀 Currently Working On
-- Learning and building web apps
-- Improving skills in frontend & backend development
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=8B5CF6&center=true&width=500&lines=CS+%26+Engineering+Student+@+UBT;Full-stack+Developer;React+%C2%B7+Node.js+%C2%B7+Java" />
 
-## 🛠️ Tools & Technologies
-- HTML, CSS, JavaScript  
-- PHP, MySQL  
-- Java
-- Node + Express
+<br/>
 
-## 📫 Reach Me
-- Email: erikjashari3@email.com
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eriki-jashari-204752354/)
+![Views](https://komarev.com/ghpvc/?username=YOUR_USERNAME&style=for-the-badge&color=8B5CF6)
+
+</div>
+
+---
+
+## 👋 About me
+
+```python
+class Erik:
+    def __init__(self):
+        self.role = "CSE Student @ UBT"
+        self.location = "Kosovo"
+        self.focus = ["Full-stack", "Software Systems Engineering"]
+        self.languages = ["Shqip", "English"]
+```
+
+## 🛠️ Tech stack
+
+<div align="center">
+
+![Skills](https://skillicons.dev/icons?i=html,css,js,react,nodejs,php,java,mysql,git,vscode&perline=10)
+
+</div>
+
+<details>
+<summary>🔎 Full breakdown (click to expand)</summary>
+
+- **Frontend:** HTML, CSS, JavaScript, React
+- **Backend:** Node.js, PHP, Java
+- **Tools:** Git, VS Code
+
+</details>
+
+---
+
+## 📊 GitHub stats
+
+<div align="center">
+
+![Stats](https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&theme=radical&hide_border=true)
+![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME&layout=compact&theme=radical&hide_border=true)
+
+</div>
