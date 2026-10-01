@@ -15,7 +15,7 @@ const player = {
     ["GUILD:", "UBT · CSE"],
     ["HOME WORLD:", "FERIZAJ, KOSOVO"],
     ["LANGUAGES:", "ALBANIAN, ENGLISH"],
-    ["MAIN QUEST:", "SPORTS TOURNAMENT SYSTEM"],
+    ["CO-OP QUEST:", "QIRAPRO (CAR RENTALS)"],
   ],
   status: "LOOKING FOR A PARTY",
   // [label, filled cells out of 16, value text, color]
@@ -39,13 +39,36 @@ const inventory = [
   { tech: "VS CODE", item: "SPELLBOOK", sprite: "book" },
 ];
 
-// type: "MAIN QUEST" or "SIDE QUEST"; progress: 0..1 (1 = QUEST COMPLETE)
+// type: "MAIN QUEST", "CO-OP QUEST" or "SIDE QUEST".
+// progress: 0..1 (1 = QUEST COMPLETE). If left out, it's done objectives / all objectives.
+// Optional: role, subtitle, tags, objectives ([text, done]), note.
 const quests = [
+  {
+    type: "CO-OP QUEST",
+    role: "PARTY MEMBER",
+    name: "QIRAPRO",
+    subtitle: "CAR RENTAL AGGREGATOR FOR KOSOVO",
+    description:
+      "A TEAM PROJECT I'M HELPING BUILD: EVERY RENTAL COMPANY IN KOSOVO IN ONE PLACE. " +
+      "SEARCH, COMPARE AND BOOK CARS, WITH A DEDICATED ADEM JASHARI AIRPORT SECTION. " +
+      "ADMIN DASHBOARDS, LIVE AVAILABILITY OVER SSE AND IMAGES ON CLOUDFLARE R2.",
+    tags: ["REACT", "NODE.JS", "EXPRESS", "POSTGRESQL", "SSE + REDIS", "CLOUDFLARE R2", "RAILWAY"],
+    objectives: [
+      ["AUTH & BOOKING API", true],
+      ["DEPLOYED ON RAILWAY", true],
+      ["IMAGE STORAGE ON R2", true],
+      ["ADMIN DASHBOARDS", false],
+      ["REDIS LIVE UPDATES", false],
+      ["MOBILE APP", false],
+    ],
+    note: "🔒 PRIVATE REPO · IN ACTIVE DEVELOPMENT",
+  },
   {
     type: "MAIN QUEST",
     name: "SPORTS TOURNAMENT MANAGEMENT SYSTEM",
     description: "MANAGE TOURNAMENTS, TEAMS, FIXTURES AND RESULTS.",
-    progress: 0.6,
+    tags: ["REACT", "NODE.JS", "EXPRESS", "TAILWIND CSS", "POSTGRESQL"],
+    progress: 1,
   },
 ];
 
@@ -136,6 +159,7 @@ const FONT = {
   "&": [".##..", "#..#.", "#.#..", ".#...", "#.#.#", "#..#.", ".##.#"],
   "·": [".....", ".....", ".....", "..#..", ".....", ".....", "....."],
   "©": [".###.", "#...#", "#.###", "#.#.#", "#.###", "#...#", ".###."],
+  "🔒": [".###.", "#...#", "#...#", "#####", "##.##", "##.##", "#####"],
   "▶": ["#....", "##...", "###..", "####.", "###..", "##...", "#...."],
   "✓": [".....", "....#", "...##", "#.##.", "###..", ".#...", "....."],
   "★": ["..#..", "..#..", "#####", ".###.", ".###.", ".#.#.", "#...#"],
@@ -366,13 +390,13 @@ ${ptext(player.footer, 450, 309, 2, P.dgrey, { anchor: "middle" })}
 function playerSelect() {
   const W = 900, H = 410;
   const rows = player.stats
-    .map(([k, v], i) => ptext(k, 290, 84 + i * 30, 2, P.orange) + ptext(v, 440, 84 + i * 30, 2, P.white))
+    .map(([k, v], i) => ptext(k, 290, 84 + i * 30, 2, P.orange) + ptext(v, 456, 84 + i * 30, 2, P.white))
     .join("\n");
   const sy = 84 + player.stats.length * 30;
   const status =
     ptext("STATUS:", 290, sy, 2, P.orange) +
-    `<rect class="blink" x="440" y="${sy + 2}" width="10" height="10" fill="${P.green}"/>` +
-    ptext(player.status, 460, sy, 2, P.green);
+    `<rect class="blink" x="456" y="${sy + 2}" width="10" height="10" fill="${P.green}"/>` +
+    ptext(player.status, 476, sy, 2, P.green);
   const bars = player.bars
     .map(([label, n, val, color], i) => {
       const y = 304 + i * 30;
@@ -418,32 +442,113 @@ ${slots}
 `);
 }
 
+// Greedy word wrap to a max number of characters per line.
+function wrap(text, max) {
+  const lines = [];
+  let line = "";
+  for (const word of text.split(" ")) {
+    if (line && (line + " " + word).length > max) {
+      lines.push(line);
+      line = word;
+    } else line = line ? line + " " + word : word;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+const QUEST_COLORS = { "MAIN QUEST": P.red, "CO-OP QUEST": P.blue, "SIDE QUEST": P.indigo };
+
+// One quest card. Returns its svg and the height it used (card + optional note).
+function questCard(q, y) {
+  const L = 50, R = 600;
+  const maxW = q.objectives ? 520 : 800;
+  const progress = q.progress ??
+    (q.objectives ? q.objectives.filter(([, d]) => d).length / q.objectives.length : 0);
+  const done = progress >= 1;
+  let out = "";
+
+  // tag + role + status
+  let cy = y + 20;
+  const tagW = textW(q.type, 2) + 16;
+  out += `<rect x="${L}" y="${cy}" width="${tagW}" height="24" fill="${QUEST_COLORS[q.type] || P.indigo}"/>` +
+    ptext(q.type, L + 8, cy + 5, 2, P.white);
+  if (q.role) out += ptext("· " + q.role, L + tagW + 12, cy + 5, 2, P.lgrey);
+  out += done
+    ? ptext("✓ QUEST COMPLETE", 850, cy + 5, 2, P.green, { anchor: "end" })
+    : ptext("▶ IN PROGRESS", 850, cy + 5, 2, P.yellow, { anchor: "end", cls: "blink" });
+
+  // name, subtitle, description
+  cy += 42;
+  out += ptext(q.name, L, cy, q.name.length <= 20 ? 4 : 3, P.white, { shadow: P.plum, sd: 2 });
+  cy += q.name.length <= 20 ? 40 : 32;
+  if (q.subtitle) {
+    out += ptext(q.subtitle, L, cy, 2, P.pink);
+    cy += 26;
+  }
+  for (const line of wrap(q.description, Math.floor((maxW + 2) / 12))) {
+    out += ptext(line, L, cy, 2, P.lgrey);
+    cy += 22;
+  }
+
+  // tech tags
+  if (q.tags) {
+    cy += 8;
+    let x = L;
+    for (const t of q.tags) {
+      const w = textW(t, 2) + 16;
+      if (x + w > L + maxW) { x = L; cy += 34; }
+      out += frame(x, cy, w, 26, 2, P.indigo, P.bg) + ptext(t, x + 8, cy + 6, 2, P.white);
+      x += w + 8;
+    }
+    cy += 26 + 16;
+  }
+
+  // progress bar
+  const n = Math.floor((L + maxW - 70 - 170) / 18);
+  const filled = Math.round(Math.max(0, Math.min(1, progress)) * n);
+  out += ptext("PROGRESS", L, cy, 2, P.orange);
+  for (let c = 0; c < n; c++)
+    out += `<rect x="${170 + c * 18}" y="${cy}" width="14" height="14" fill="${c < filled ? (done ? P.green : P.yellow) : P.empty}"/>`;
+  out += ptext(`${Math.round(progress * 100)}%`, 170 + n * 18 + 10, cy, 2, P.white);
+  cy += 14 + 20;
+
+  // objectives column
+  let ry = y;
+  if (q.objectives) {
+    ry = y + 66;
+    out += ptext("OBJECTIVES", R, ry, 2, P.orange);
+    ry += 30;
+    for (const [text, ok] of q.objectives) {
+      out += ok
+        ? ptext("✓", R, ry, 2, P.green) + ptext(text, R + 22, ry, 2, P.white)
+        : `<rect x="${R + 1}" y="${ry + 2}" width="10" height="10" fill="none" stroke="${P.dgrey}" stroke-width="2"/>` +
+          ptext(text, R + 22, ry, 2, P.dgrey);
+      ry += 28;
+    }
+    ry += 6;
+  }
+
+  const h = Math.max(cy, ry) - y;
+  if (q.objectives) out += `<rect x="${R - 22}" y="${y + 60}" width="2" height="${h - 76}" fill="${P.empty}"/>`;
+  let svg = frame(30, y, 840, h, 4, P.maze, P.slot) + out;
+  let used = h;
+  if (q.note) {
+    svg += ptext(q.note, 450, y + h + 12, 2, P.dgrey, { anchor: "middle" });
+    used += 34;
+  }
+  return { svg, h: used };
+}
+
 function questLog() {
-  const W = 900, ch = 160, gap = 16, top = 70;
-  const slotY = top + quests.length * (ch + gap);
+  const W = 900, gap = 16;
+  let y = 70, cards = "";
+  for (const q of quests) {
+    const c = questCard(q, y);
+    cards += c.svg + "\n";
+    y += c.h + gap;
+  }
+  const slotY = y;
   const H = slotY + 50 + 24;
-  const cards = quests
-    .map((q, i) => {
-      const y = top + i * (ch + gap);
-      const done = q.progress >= 1;
-      const tagW = textW(q.type, 2) + 16;
-      const tagColor = q.type === "MAIN QUEST" ? P.red : P.indigo;
-      const status = done
-        ? ptext("✓ QUEST COMPLETE", 850, y + 25, 2, P.green, { anchor: "end" })
-        : ptext("▶ IN PROGRESS", 850, y + 25, 2, P.yellow, { anchor: "end", cls: "blink" });
-      const filled = Math.round(Math.max(0, Math.min(1, q.progress)) * 20);
-      let cells = "";
-      for (let c = 0; c < 20; c++)
-        cells += `<rect x="${170 + c * 26}" y="${y + 120}" width="22" height="14" fill="${c < filled ? (done ? P.green : P.yellow) : P.empty}"/>`;
-      return frame(30, y, 840, ch, 4, P.maze, P.slot) +
-        `<rect x="50" y="${y + 20}" width="${tagW}" height="24" fill="${tagColor}"/>` +
-        ptext(q.type, 58, y + 25, 2, P.white) + status +
-        ptext(q.name, 50, y + 60, 3, P.white) +
-        ptext(q.description, 50, y + 92, 2, P.lgrey) +
-        ptext("PROGRESS", 50, y + 120, 2, P.orange) + cells +
-        ptext(`${Math.round(q.progress * 100)}%`, 710, y + 120, 2, P.white);
-    })
-    .join("\n");
   return panel(W, H, `
 ${header("QUEST LOG", 26)}
 ${cards}

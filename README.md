@@ -2,11 +2,11 @@
 
 <img src="assets/title-screen.svg" width="100%" alt="Title screen: ERIK JASHARI, Full-Stack Developer. Press start." />
 
-<img src="https://readme-typing-svg.demolab.com?font=Press+Start+2P&size=14&pause=1200&color=FFEC27&center=true&vCenter=true&width=720&lines=INSERT+COIN+TO+CONTINUE...;PLAYER+1:+ERIK+JASHARI;CURRENT+QUEST:+SPORTS+TOURNAMENT+SYSTEM;LOOKING+FOR+A+PARTY+(INTERNSHIPS)" alt="Typing text" />
+<img src="https://readme-typing-svg.demolab.com?font=Press+Start+2P&size=14&pause=1200&color=FFEC27&center=true&vCenter=true&width=720&lines=INSERT+COIN+TO+CONTINUE...;PLAYER+1:+ERIK+JASHARI;CO-OP+QUEST:+QIRAPRO+(CAR+RENTALS);LOOKING+FOR+A+PARTY+(INTERNSHIPS)" alt="Typing text" />
 
 <img src="assets/divider.svg" width="100%" />
 
-<img src="assets/player-select.svg" width="100%" alt="Player select. Name: Erik Jashari. Class: Full-Stack Developer. Guild: UBT, Computer Science and Engineering. Home world: Ferizaj, Kosovo. Languages: Albanian, English. Main quest: Sports Tournament Management System. Status: looking for a party (open to internships)." />
+<img src="assets/player-select.svg" width="100%" alt="Player select. Name: Erik Jashari. Class: Full-Stack Developer. Guild: UBT, Computer Science and Engineering. Home world: Ferizaj, Kosovo. Languages: Albanian, English. Co-op quest: Qirapro, car rental aggregator. Status: looking for a party (open to internships)." />
 
 <img src="assets/divider.svg" width="100%" />
 
@@ -14,7 +14,9 @@
 
 <img src="assets/divider.svg" width="100%" />
 
-<img src="assets/quest-log.svg" width="100%" alt="Quest log. Main quest: Sports Tournament Management System, manage tournaments, teams, fixtures and results. In progress, 60%." />
+<img src="assets/quest-log.svg" width="100%" alt="Quest log. Co-op quest (party member): Qirapro, a car rental aggregator for Kosovo built with React, Node.js, Express, PostgreSQL, SSE + Redis, Cloudflare R2 and Railway; auth and booking API, Railway deploy and R2 image storage done; admin dashboards, Redis live updates and mobile app to do; private repo in active development. Main quest: Sports Tournament Management System, quest complete." />
+
+[▶ Play the Sports Tournament Management System quest](https://github.com/Erik-Jashari/Sistem-per-Menaxhimin-e-Turneut-Sportiv)
 
 <img src="assets/divider.svg" width="100%" />
 
