@@ -19,9 +19,12 @@
 class Erik:
     def __init__(self):
         self.role = "CSE Student @ UBT"
-        self.location = "Kosovo-Ferizaj"
-        self.focus = ["Full-stack", "Software Engineering"]
+        self.location = "Kosovo Ferizaj"
+        self.stack = ["React", "Node.js", "Java", "JavaScript", "PostgreSQL"]
+        self.focus = "Software Engineering"
+        self.currently_building = "Sports Tournament Management System"
         self.languages = ["Shqip", "English"]
+        self.open_to = "internships"
 ```
 
 ## 🛠️ Tech stack
