@@ -43,12 +43,6 @@ class Erik:
 - **Tools:** Git, VS Code
 
 </details>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake-dark.svg" />
-  <img alt="snake animation" src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_USERNAME/output/github-snake.svg" />
-</picture>
-
 ---
 
 ## 📊 GitHub stats
@@ -59,3 +53,7 @@ class Erik:
 ![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&theme=radical&hide_border=true)
 
 </div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake-dark.svg" />
+  <img alt="snake animation" src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_USERNAME/output/github-snake.svg" />
+</picture>
