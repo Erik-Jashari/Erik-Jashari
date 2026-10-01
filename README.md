@@ -1,59 +1,34 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=150&section=header&text=Erik%20Jashari&fontSize=48&fontColor=ffffff" />
+<img src="assets/banner.svg" width="100%" alt="Erik Jashari: Full-Stack Developer, CSE Student at UBT, Ferizaj, Kosovo" />
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=8B5CF6&center=true&width=500&lines=CS+%26+Engineering+Student+@+UBT;Full-stack+Developer;React+%C2%B7+Node.js+%C2%B7+Java" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=7DD3FC&center=true&vCenter=true&width=520&lines=Transmission+incoming...;Full-stack+developer+in+orbit;Currently+building:+Sports+Tournament+System;Open+to+internships" />
 
 <br/>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eriki-jashari-204752354/) [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:erikjashari3@gmail.com)
-<br/>
-![Views](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=8B5CF6)
+[![Email](https://img.shields.io/badge/Email-0b0f2e?style=for-the-badge&logo=gmail&logoColor=7dd3fc)](mailto:erikjashari3@gmail.com) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0b0f2e?style=for-the-badge&logo=linkedin&logoColor=7dd3fc)](https://www.linkedin.com/in/eriki-jashari-204752354/) ![Signals received](https://komarev.com/ghpvc/?username=Erik-Jashari&style=for-the-badge&color=6d28d9&label=SIGNALS%20RECEIVED)
+
+<img src="assets/divider.svg" width="100%" />
+
+<img src="assets/mission-briefing.svg" width="100%" alt="Mission briefing: Erik Jashari, Full-Stack Developer based in Ferizaj, Kosovo. CSE student at UBT. Speaks Albanian and English. Open to internships. Systems: Frontend (React, JavaScript, HTML, CSS), Backend (Node.js, Java, PHP), Databases (PostgreSQL, MySQL), Tools (Git, VS Code)." />
+
+<img src="assets/divider.svg" width="100%" />
+
+<img src="assets/mission-log.svg" width="100%" alt="Mission log: 01 Sports Tournament Management System, manage tournaments, teams, fixtures and results. Status: in flight." />
+
+<img src="assets/divider.svg" width="100%" />
+
+### 🛰️ Equipment on board
+
+![Skills](https://skillicons.dev/icons?i=html,css,js,react,nodejs,php,java,mysql,postgres,git,vscode&perline=11&theme=dark)
+
+<img src="assets/divider.svg" width="100%" />
+
+### 📡 Telemetry
+
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=Erik-Jashari&show_icons=true&hide_border=true&card_width=420&bg_color=0b0f2e&title_color=7dd3fc&text_color=e2e8f0&icon_color=a78bfa" />
+<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&hide_border=true&card_width=420&bg_color=0b0f2e&title_color=7dd3fc&text_color=e2e8f0" />
+
+<img src="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake-space.svg" alt="contribution graph eaten by a comet" />
 
 </div>
-
----
-
-## 👋 About me
-
-```python
-class Erik:
-    def __init__(self):
-        self.role = "CSE Student @ UBT"
-        self.location = "Kosovo Ferizaj"
-        self.stack = ["React", "Node.js", "Java", "JavaScript", "PostgreSQL"]
-        self.focus = "Software Engineering"
-        self.currently_building = "Sports Tournament Management System"
-        self.languages = ["Shqip", "English"]
-        self.open_to = "internships"
-```
-
-## 🛠️ Tech stack
-
-<div align="center">
-
-![Skills](https://skillicons.dev/icons?i=html,css,js,react,nodejs,php,java,mysql,git,vscode&perline=10)
-
-</div>
-
-<details>
-<summary>🔎 Full breakdown (click to expand)</summary>
-
-- **Frontend:** HTML, CSS, JavaScript, React
-- **Backend:** Node.js, PHP, Java
-- **Tools:** Git, VS Code
-
-</details>
----
-
-## 📊 GitHub stats
-
-<p align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=Erik-Jashari&show_icons=true&theme=radical&hide_border=true&card_width=420" />
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Erik-Jashari&layout=compact&theme=radical&hide_border=true&card_width=420" />
-</p>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake-dark.svg" />
-  <img alt="snake animation" src="https://raw.githubusercontent.com/Erik-Jashari/Erik-Jashari/output/github-snake.svg" />
-</picture>
