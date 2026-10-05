@@ -16,7 +16,7 @@
 
 <img src="assets/quest-log.svg" width="100%" alt="Quest log. Co-op quest (party member): Qirapro, a car rental aggregator for Kosovo built with React, Node.js, Express, PostgreSQL, SSE + Redis, Cloudflare R2 and Railway; auth and booking API, Railway deploy and R2 image storage done; admin dashboards, Redis live updates and mobile app to do; private repo in active development. Main quest: CubeRush, a 3D Rubik's cube speedsolving game built with TypeScript, React, Three.js, Fastify, SQLite and Docker and deployed on Fly.io, with server-verified solves, five game modes, leaderboards, lessons and hints, and a skins and themes shop; live at cuberush-erik.fly.dev; quest complete. Main quest: Sports Tournament Management System, quest complete." />
 
-[▶ Play CubeRush live](https://cuberush-erik.fly.dev/) · [CubeRush repo](https://github.com/Erik-Jashari/CubeRush) · [▶ Play the Sports Tournament Management System quest](https://github.com/Erik-Jashari/Sistem-per-Menaxhimin-e-Turneut-Sportiv)
+[▶ Play CubeRush live](https://cuberush-erik.fly.dev/) · [▶ Play the Sports Tournament Management System quest](https://github.com/Erik-Jashari/Sistem-per-Menaxhimin-e-Turneut-Sportiv)
 
 <img src="assets/divider.svg" width="100%" />
 
