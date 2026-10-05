@@ -65,6 +65,25 @@ const quests = [
   },
   {
     type: "MAIN QUEST",
+    name: "CUBERUSH",
+    subtitle: "3D RUBIK'S CUBE SPEEDSOLVING GAME",
+    description:
+      "SOLVE SEEDED SCRAMBLES AGAINST THE CLOCK, EARN POINTS AND CLIMB THE LEADERBOARD. " +
+      "EVERY SOLVE IS REPLAYED AND VERIFIED ON THE SERVER. " +
+      "BUILT-IN LESSONS TEACH THE BEGINNER METHOD STEP BY STEP.",
+    tags: ["TYPESCRIPT", "REACT", "THREE.JS", "FASTIFY", "SQLITE", "DOCKER", "FLY.IO"],
+    objectives: [
+      ["3D DRAG-TO-TURN CUBE", true],
+      ["VERIFIED SOLVES", true],
+      ["5 GAME MODES", true],
+      ["LEADERBOARDS", true],
+      ["LESSONS & HINTS", true],
+      ["SKINS & THEMES SHOP", true],
+    ],
+    note: "▶ LIVE AT CUBERUSH-ERIK.FLY.DEV",
+  },
+  {
+    type: "MAIN QUEST",
     name: "SPORTS TOURNAMENT MANAGEMENT SYSTEM",
     description: "MANAGE TOURNAMENTS, TEAMS, FIXTURES AND RESULTS.",
     tags: ["REACT", "NODE.JS", "EXPRESS", "TAILWIND CSS", "POSTGRESQL"],
